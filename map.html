@@ -6,10 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <p class="storenm">
-        <strong>지점명</strong>
-        <span></span>
-    </p>
     <div id="store">
         <ul>
            <!-- 데이터 삽입 -->
@@ -27,13 +23,15 @@
                 dateType: "json",
                 success : function(mapinfo){
 
-                    let maptag = `<li>`;
-
-                        maptag += `<h2 class="storenm"><strong>지점명</strong><span>${mapinfo[0].storenm}</span></h2>`;
-                        maptag += `<p class="store3m"><strong>지점장</strong><span>${mapinfo[0].storeem}</span></p>`;
-                        maptag += `<p class="addr"><strong>주소</strong><span>${mapinfo[0].addr}</span></p>`;
+                    let maptag = ""; // 초기값 선언은 for , forEach 문 안에서 하지 않는다. / 대입식도 역시 없음
+                    mapinfo.forEach(function(ele, idx){
+                        maptag += `<li>`;
+                        maptag += `<h2 class="storenm"><strong>지점명</strong><span> ${mapinfo[idx].storenm}</span></h2>`;
+                        maptag += `<p class="storeem"><strong>지점장</strong><span> ${mapinfo[idx].storeem}</span></p>`;
+                        maptag += `<p class="addr"><strong>주소</strong><span> ${mapinfo[idx].addr}</span></p>`;
                         // 데이터에 따라서 커스터마이징
                         maptag += `</li>`;
+                    });
 
                     $("#store ul").html(maptag);
                 },
