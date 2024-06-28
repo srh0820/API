@@ -18,22 +18,34 @@
 
     const btns = document.querySelectorAll("#mapBtns .btn"); // array 데이터
 
+    // btn 각 버튼에 forEach 사용해서 클릭이벤트 추가 
     btns.forEach(function( ele , idx ){
         ele.addEventListener('click', function(){           
-            const convertDB = JSON.parse(this.dataset.map);           
-            mapoutput (convertDB[0],convertDB[1]);
+            const convertDB = JSON.parse(this.dataset.map);  // 클릭 동작시 this.dataset.map 을 통해 버튼의 data-map 가져오고 json으로 파싱
+            mapoutput (convertDB[0],convertDB[1]); // 파싱된 데이터 첫번째와 두번째 값을 mapoutput에 전달
         })
     })
 
-    btns[0].click(); // 실행식 위치 중요!
+    // 첫번째 버튼 클릭해서 초기 지도 설정
+    btns[0].click(); // 실행식 위치 중요! (순차적함수, 귀속함수)
 
-    function  mapoutput (a, b){ // 모형 선언적함수
+    // 변수 초기화
+    let count = 0;
+    setInterval(function(){ // 3초마다 실행
+        count++;    // 1씩 증가
+        count %= btns.length; // 버튼 배열의 길이로 나눈 나머지를 사용하여 현재 클릭할 버튼을 결정
+        btns[count].click(); // 결정된 버튼 클릭해서 업데이트
+    }, 2000)
+
+    // mapoutput 두 개의 인자를 받아서 지도 중심 좌표 설정
+    function mapoutput (a, b){ // 모형 (선언적함수)
         const mapContainer = document.getElementById('map'),  
         mapOption = { 
-            center: new kakao.maps.LatLng(a, b), 
-            level: 3 
+            center: new kakao.maps.LatLng(a, b), // 지도 중심 좌표
+            level: 3    // 지도 레벨
         };
         const map = new kakao.maps.Map(mapContainer, mapOption); 
+        // 새로운 지도 만들어서 mapContainer에 설정
     }
 
 </script>
